@@ -14,6 +14,7 @@ namespace UKParliament.CodeTest.Web
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -26,7 +27,19 @@ namespace UKParliament.CodeTest.Web
 
             services.AddDbContext<PersonManagerContext>(op => op.UseInMemoryDatabase("PersonManager"));
 
-            services.AddScoped<IPersonService, PersonService>();
+            //  simonjpearson 06 Nov, 2021: This could be extended using a SQL Database
+            /* 
+            Add to appsettings.json
+            
+            "ConnectionStrings": {
+                "UKParliamentDb": "Server=(localdb)\\mssqllocaldb;Database=ukparliament-codetest;Trusted_Connection=True;MultipleActiveResultSets=true"
+             },
+
+                services.AddDbContext<PersonManagerContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("UKParliamentDb")));
+            */
+
+            services.AddScoped<IPersonService, PersonService<PersonManagerContext>>();
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -36,8 +49,13 @@ namespace UKParliament.CodeTest.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, PersonManagerContext db)
         {
+
+            // simonjpearson 06 Nov, 2021: Process any database migrations that were generated
+            //db.Database.Migrate();
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

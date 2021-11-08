@@ -1,0 +1,73 @@
+<div class="jumbotron py-2">
+  <h1 class="display-4 text-center">simonjpearson: Persons Db</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm">
+    <div class="row">
+      <div class="col-auto mb-3" *ngFor="let person of service.list">
+        <div class="d-flex">
+          <div class="p-0">
+            <div class="card" style="width: 20rem;">
+              <div class="card-header bg-dark text-white font-weight-bold">{{person.name}} ({{person.id}})</div>
+              <div class="card-body small">
+                <table>
+                  <tr>
+                    <td class="font-weight-bold">DOB</td>
+                    <td>{{person.dateOfBirth | date :'dd/MM/yyyy'}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Address 1</td>
+                    <td>{{person.addressLine1}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Address 2</td>
+                    <td>{{person.addressLine2}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Street</td>
+                    <td>{{person.street}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Town</td>
+                    <td>{{person.town}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">County</td>
+                    <td>{{person.county}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Postcode</td>
+                    <td>{{person.postCode}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Email</td>
+                    <td>{{person.emailAddress}}</td>
+                  </tr>
+                  <tr>
+                    <td class="font-weight-bold">Phone #</td>
+                    <td>{{person.phoneNumber}}</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="card-footer small align-right">
+                <div class="dropdown show">
+                  <a class="btn btn-secondary btn-sm dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Modify
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <span class="dropdown-item" (click)="populateForm(person)">Edit</span>
+                    <span class="dropdown-item text-danger" (click)="onDelete(person.id)">Delete</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <app-person-form></app-person-form>
+  </div>
+</div>
